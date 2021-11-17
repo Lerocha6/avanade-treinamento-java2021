@@ -1,17 +1,14 @@
 package com.avanade.aplicacao.servicos;
 
-import com.avanade.aplicacao.Programa;
+import com.avanade.aplicacao.model.PedidoModel;
 import com.avanade.aplicacao.validacoes.ValidarArquivos;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import lombok.extern.slf4j.Slf4j;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.List;
 
+@Slf4j
 public class ServicoProcessarArquivo {
-
-    private static final Logger LOG = LoggerFactory.getLogger(ServicoProcessarArquivo.class);
 
     private final Path dirEntrada;
     private final List<String> lstArquivos;
@@ -24,22 +21,24 @@ public class ServicoProcessarArquivo {
 
     public void executar() {
         if (lstArquivos.isEmpty()){
-           LOG.info("Não há arquivos para processamento!");
+           log.info("Não há arquivos para processamento!");
            return;
         }
 
-      ServicoLerArquivo servico = new ServicoLerArquivo();
+      ServicoLerArquivo servicoLerArquivo = new ServicoLerArquivo();
        lstArquivos.forEach((arquivo) ->{
            String caminhoArquivo = dirEntrada.toString() + File.separator + arquivo;
-           LOG.info("Processando arquivo {}", caminhoArquivo);
+           log.info("Processando arquivo {}", caminhoArquivo);
 
-           List<String> linhas = servico.executar(caminhoArquivo);
-           if (linhas.isEmpty()){
-               LOG.info("Não há registros no arquivo {}", caminhoArquivo);
+           List<PedidoModel> pedidos = servicoLerArquivo.executar(caminhoArquivo);
+           if (pedidos.isEmpty()){
+               log.info("Não há registros no arquivo {}", caminhoArquivo);
                return;
            }
 
-           LOG.info("Encontradas [{}] linhas no arquivo {}",linhas.size(), caminhoArquivo);
+           log.info("Encontradas [{}] pedidos no arquivo {}",pedidos.size(), caminhoArquivo);
+
+           // TODO Gravar no banco de dados
 
         });
 
