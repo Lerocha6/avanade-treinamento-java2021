@@ -57,9 +57,6 @@ public class ServicoLerArquivo {
 
             // TODO CRIAR INTENS DO PEDIDO
        }
-
-
-
        return pedidos;
    }
 
