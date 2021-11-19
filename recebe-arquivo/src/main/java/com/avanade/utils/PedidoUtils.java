@@ -2,7 +2,6 @@ package com.avanade.aplicacao.utils;
 
 import com.avanade.aplicacao.model.ClienteModel;
 import com.avanade.aplicacao.model.PedidoModel;
-import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
@@ -13,7 +12,7 @@ import java.util.Optional;
 public final class PedidoUtils {
 
     public static final int TAMANHO_CAMPOS_PEDIDO = 7;
-    private static SimpleDateFormat SDF;
+    private static final SimpleDateFormat SDF;
 
     static {
         SDF = new SimpleDateFormat("ddMMyyyy");
@@ -22,7 +21,7 @@ public final class PedidoUtils {
     private PedidoUtils() {
     }
 
-    public static Optional<PedidoModel> criarPedido(String... campos) {
+    public static Optional<PedidoModel> criarPedido(String...campos) {
         if (campos.length != TAMANHO_CAMPOS_PEDIDO) {
             return Optional.empty();
         }
@@ -39,12 +38,12 @@ public final class PedidoUtils {
             return Optional.of(pedido);
 
         } catch (Exception ex) {
-            log.error("Falha ao criar Pedido [Campos=>{}", campos,ex);
+            log.error("Falha ao criar Pedido [Campos=>{}]", campos, ex);
             return Optional.empty();
         }
     }
 
-    public static Optional<ClienteModel> criarCliente(Idx idx, String... campos) {
+    private static Optional<ClienteModel> criarCliente(Idx idx, String...campos) {
         try {
             ClienteModel cliente = ClienteModel.builder()
                     .codigo(Integer.valueOf(campos[idx.inc()]))
@@ -52,21 +51,19 @@ public final class PedidoUtils {
                     .build();
             return Optional.of(cliente);
         } catch (Exception ex) {
-            log.error("Falha ao criar Cliente [Campos=>{}", campos,ex);
+            log.error("Falha ao criar Cliente [Campos=>{}]", campos, ex);
             return Optional.empty();
         }
-
     }
-
 
     static class Idx {
         private int idx;
 
-        public static Idx create(){
-            return  new Idx();
+        public static Idx create() {
+            return new Idx();
         }
 
-       Idx(){
+        Idx() {
             idx = 1;
         }
 
@@ -74,5 +71,5 @@ public final class PedidoUtils {
             return idx++;
         }
     }
-}
 
+}

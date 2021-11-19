@@ -15,5 +15,4 @@ public class ItemModel {
     private BigDecimal valorUnitario;
     private BigDecimal valor;
 
-
 }
