@@ -8,5 +8,6 @@ create table pedidos(
 ;
 
 alter table
-   add constraint pk_Pedidos
-   add primary key(codigo)
+  add constraint pk_Pedidos
+  ,add primary key(codigo)
+;
